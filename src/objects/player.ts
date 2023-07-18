@@ -17,12 +17,12 @@ export class Player extends Phaser.GameObjects.Image {
     private bullets: Phaser.GameObjects.Group
 
     // input
-    private cursors: Phaser.Types.Input.Keyboard.CursorKeys
+    // private cursors: Phaser.Types.Input.Keyboard.CursorKeys
     private rotateKeyLeft: Phaser.Input.Keyboard.Key
     private rotateKeyRight: Phaser.Input.Keyboard.Key
     private MoveUpKey: Phaser.Input.Keyboard.Key
     private MoveDownKey: Phaser.Input.Keyboard.Key
-    private shootingKey: Phaser.Input.Keyboard.Key
+    // private shootingKey: Phaser.Input.Keyboard.Key
 
     public getBullets(): Phaser.GameObjects.Group {
         return this.bullets
@@ -67,14 +67,14 @@ export class Player extends Phaser.GameObjects.Image {
 
         // input
         if (this.scene.input.keyboard) {
-            this.cursors = this.scene.input.keyboard.createCursorKeys()
+            // this.cursors = this.scene.input.keyboard.createCursorKeys()
             this.rotateKeyLeft = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
             this.rotateKeyRight = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
             this.MoveUpKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
             this.MoveDownKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
-            this.shootingKey = this.scene.input.keyboard.addKey(
-                Phaser.Input.Keyboard.KeyCodes.SPACE
-            )
+            // this.shootingKey = this.scene.input.keyboard.addKey(
+            //     Phaser.Input.Keyboard.KeyCodes.SPACE
+            // )
         }
 
         // physics
