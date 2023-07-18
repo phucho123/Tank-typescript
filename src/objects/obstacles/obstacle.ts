@@ -19,7 +19,7 @@ export class Obstacle extends Phaser.GameObjects.Image {
         this.body.setImmovable(true)
     }
 
-    update(): void {
+    public update(): void {
         ///
     }
 }

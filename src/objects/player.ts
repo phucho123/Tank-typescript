@@ -20,6 +20,8 @@ export class Player extends Phaser.GameObjects.Image {
     private cursors: Phaser.Types.Input.Keyboard.CursorKeys
     private rotateKeyLeft: Phaser.Input.Keyboard.Key
     private rotateKeyRight: Phaser.Input.Keyboard.Key
+    private MoveUpKey: Phaser.Input.Keyboard.Key
+    private MoveDownKey: Phaser.Input.Keyboard.Key
     private shootingKey: Phaser.Input.Keyboard.Key
 
     public getBullets(): Phaser.GameObjects.Group {
@@ -66,8 +68,10 @@ export class Player extends Phaser.GameObjects.Image {
         // input
         if (this.scene.input.keyboard) {
             this.cursors = this.scene.input.keyboard.createCursorKeys()
-            this.rotateKeyLeft = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
-            this.rotateKeyRight = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
+            this.rotateKeyLeft = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
+            this.rotateKeyRight = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
+            this.MoveUpKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
+            this.MoveDownKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
             this.shootingKey = this.scene.input.keyboard.addKey(
                 Phaser.Input.Keyboard.KeyCodes.SPACE
             )
@@ -75,16 +79,29 @@ export class Player extends Phaser.GameObjects.Image {
 
         // physics
         this.scene.physics.world.enable(this)
+        this.scene.input.on('pointerdown', () => {
+            this.handleShooting()
+        })
     }
 
-    update(): void {
+    public update(): void {
+        // console.log(this.scene.input.mousePointer.x, this.scene.input.mousePointer.y)
+        // console.log(this.scene.input.mousePointer.x, this.scene.input.mousePointer.y)
+        let angle = Math.atan2(
+            this.scene.input.mousePointer.y - this.scene.cameras.main.height / 2,
+            this.scene.input.mousePointer.x - this.scene.cameras.main.width / 2
+        )
+        angle = angle + Math.PI / 2
+        console.log(angle)
+        this.barrel.setRotation(angle)
+
         if (this.active) {
             this.barrel.x = this.x
             this.barrel.y = this.y
             this.lifeBar.x = this.x
             this.lifeBar.y = this.y
             this.handleInput()
-            this.handleShooting()
+            // this.handleShooting()
         } else {
             this.destroy()
             // this.barrel.destroy()
@@ -92,13 +109,14 @@ export class Player extends Phaser.GameObjects.Image {
         }
     }
 
-    destroy() {
+    public destroy() {
+        this.body.setVelocity(0, 0)
         this.setVisible(false)
         this.barrel.setVisible(false)
         this.lifeBar.setVisible(false)
     }
 
-    reborn() {
+    private reborn() {
         this.active = true
         this.setVisible(true)
         this.barrel.setVisible(true)
@@ -108,13 +126,29 @@ export class Player extends Phaser.GameObjects.Image {
     private handleInput() {
         // move tank forward
         // small corrections with (- MATH.PI / 2) to align tank correctly
-        if (this.cursors.up.isDown) {
+        // if (this.cursors.up.isDown) {
+        //     this.scene.physics.velocityFromRotation(
+        //         this.rotation - Math.PI / 2,
+        //         this.speed,
+        //         this.body.velocity
+        //     )
+        // } else if (this.cursors.down.isDown) {
+        //     this.scene.physics.velocityFromRotation(
+        //         this.rotation - Math.PI / 2,
+        //         -this.speed,
+        //         this.body.velocity
+        //     )
+        // } else {
+        //     this.body.setVelocity(0, 0)
+        // }
+
+        if (this.MoveUpKey.isDown) {
             this.scene.physics.velocityFromRotation(
                 this.rotation - Math.PI / 2,
                 this.speed,
                 this.body.velocity
             )
-        } else if (this.cursors.down.isDown) {
+        } else if (this.MoveDownKey.isDown) {
             this.scene.physics.velocityFromRotation(
                 this.rotation - Math.PI / 2,
                 -this.speed,
@@ -125,22 +159,28 @@ export class Player extends Phaser.GameObjects.Image {
         }
 
         // rotate tank
-        if (this.cursors.left.isDown) {
-            this.rotation -= 0.02
-        } else if (this.cursors.right.isDown) {
-            this.rotation += 0.02
-        }
+        // if (this.cursors.left.isDown) {
+        //     this.rotation -= 0.02
+        // } else if (this.cursors.right.isDown) {
+        //     this.rotation += 0.02
+        // }
 
         // rotate barrel
+        // if (this.rotateKeyLeft.isDown) {
+        //     this.barrel.rotation -= 0.05
+        // } else if (this.rotateKeyRight.isDown) {
+        //     this.barrel.rotation += 0.05
+        // }
         if (this.rotateKeyLeft.isDown) {
-            this.barrel.rotation -= 0.05
+            this.rotation -= 0.05
         } else if (this.rotateKeyRight.isDown) {
-            this.barrel.rotation += 0.05
+            this.rotation += 0.05
         }
     }
 
     private handleShooting(): void {
-        if (this.shootingKey.isDown && this.scene.time.now > this.lastShoot) {
+        // if (this.shootingKey.isDown && this.scene.time.now > this.lastShoot)
+        if (this.scene.time.now > this.lastShoot) {
             this.scene.cameras.main.shake(20, 0.005)
             this.scene.tweens.add({
                 targets: this,
@@ -193,7 +233,7 @@ export class Player extends Phaser.GameObjects.Image {
 
                 // const bullet = this.bullets.get() as Bullet
                 // bullet.setParams(this.barrel.x, this.barrel.y, this.barrel.rotation, 'bulletBlue')
-                this.lastShoot = this.scene.time.now + 400
+                this.lastShoot = this.scene.time.now + 100
             }
             // const bullet = this.bullets.get() as Bullet
             // if (bullet)
@@ -221,7 +261,6 @@ export class Player extends Phaser.GameObjects.Image {
         if (this.health <= 0) {
             this.health = 0
             this.active = false
-            // this.scene.scene.start('MenuScene')
         }
     }
 

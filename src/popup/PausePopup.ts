@@ -17,7 +17,7 @@ export class PausePopup extends Phaser.GameObjects.Container {
         return PausePopup.instance
     }
 
-    init() {
+    private init() {
         this.observable = Observable.getInstance()
         this.observable.subscribe(this)
         this.overlay = this.scene.add
@@ -79,7 +79,7 @@ export class PausePopup extends Phaser.GameObjects.Container {
         this.setScale(0)
     }
 
-    open() {
+    public open() {
         this.overlay.setVisible(true)
         this.scene.add.tween({
             targets: this,
@@ -92,7 +92,7 @@ export class PausePopup extends Phaser.GameObjects.Container {
         })
     }
 
-    close() {
+    public close() {
         this.observable.notify('Closed Pause Popup')
         this.overlay.setVisible(false)
         this.scene.add.tween({
@@ -103,7 +103,7 @@ export class PausePopup extends Phaser.GameObjects.Container {
         })
     }
 
-    observerMessage(_message: string) {
+    public observerMessage(_message: string) {
         console.log('PausePopup got Message')
     }
 }

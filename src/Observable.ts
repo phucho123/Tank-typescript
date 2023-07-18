@@ -11,15 +11,15 @@ export class Observable {
         return Observable.instance
     }
 
-    subscribe(gameObj: any) {
+    public subscribe(gameObj: any) {
         this.observers.push(gameObj)
     }
 
-    unsubscribe(gameObj: any) {
+    public unsubscribe(gameObj: any) {
         this.observers = this.observers.filter((observer: any) => observer !== gameObj)
     }
 
-    notify(message: string) {
+    public notify(message: string) {
         this.observers.forEach((observer: any) => observer.observerMessage(message))
     }
 }

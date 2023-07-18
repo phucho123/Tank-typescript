@@ -6,7 +6,7 @@ export class Button extends Phaser.GameObjects.Image {
         this.init()
     }
 
-    init() {
+    private init() {
         this.setScrollFactor(0)
         this.setScale(2)
         this.setInteractive()
@@ -21,7 +21,7 @@ export class Button extends Phaser.GameObjects.Image {
         })
     }
 
-    addFunc(func: () => void) {
+    public addFunc(func: () => void) {
         this.on('pointerdown', () => {
             this.setScale(1.5)
             func()

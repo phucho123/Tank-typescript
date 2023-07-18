@@ -8,7 +8,7 @@ export class BootScene extends Phaser.Scene {
         })
     }
 
-    preload(): void {
+    public preload(): void {
         // set the background, create the loading and progress bar
         this.cameras.main.setBackgroundColor(0x000000)
         this.createLoadingGraphics()
@@ -51,7 +51,7 @@ export class BootScene extends Phaser.Scene {
         this.load.pack('preload', './assets/pack.json', 'preload')
     }
 
-    update(): void {
+    public update(): void {
         this.scene.start('MenuScene')
     }
 

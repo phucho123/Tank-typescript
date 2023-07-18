@@ -74,7 +74,7 @@ export class Enemy extends Phaser.GameObjects.Image {
         this.scene.physics.world.enable(this)
     }
 
-    update(): void {
+    public update(): void {
         if (this.active) {
             this.barrel.x = this.x
             this.barrel.y = this.y
@@ -89,13 +89,13 @@ export class Enemy extends Phaser.GameObjects.Image {
         }
     }
 
-    destroy() {
+    public destroy() {
         this.setVisible(false)
         this.barrel.setVisible(false)
         this.lifeBar.setVisible(false)
     }
 
-    reborn() {
+    private reborn() {
         this.active = true
         this.setVisible(true)
         this.barrel.setVisible(true)
@@ -151,7 +151,7 @@ export class Enemy extends Phaser.GameObjects.Image {
         }
     }
 
-    reset() {
+    public reset() {
         console.log('reborn enemy')
         this.reborn()
         this.health = 1

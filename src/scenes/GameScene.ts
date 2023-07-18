@@ -10,9 +10,7 @@ import { ScoreUI } from '../ui/ScoreUI'
 export class GameScene extends Phaser.Scene {
     private map: Phaser.Tilemaps.Tilemap
     private tileset: Phaser.Tilemaps.Tileset
-    // private tileset2: Phaser.Tilemaps.Tileset
     private layer: Phaser.Tilemaps.TilemapLayer
-    // private layer2: Phaser.Tilemaps.TilemapLayer
     private bitmapTexts: Phaser.GameObjects.BitmapText[] = []
 
     private player: Player
@@ -34,52 +32,18 @@ export class GameScene extends Phaser.Scene {
         })
     }
 
-    init(): void {
+    public init(): void {
         ///
-        // this.pausePopup = PausePopup.getInstance(this)
-        // this.cameras.main.fadeIn(100)
-        // const fxCamera = this.cameras.main.postFX.addPixelate(40)
-        // this.add.tween({
-        //     targets: fxCamera,
-        //     duration: 1000,
-        //     amount: -1,
-        // })
     }
 
-    create(): void {
+    public create(): void {
         this.updateState = true
         this.observable = Observable.getInstance()
-        this.scoreUI = new ScoreUI(this)
+        this.scoreUI = ScoreUI.getInstance(this)
         this.observable.subscribe(this)
         console.log('Create game Scene')
-        // this.input.on('pointerdown', () => {
-        //     const fx = this.cameras.main.postFX.addWipe()
-        //     this.scene.transition({
-        //         target: 'MenuScene',
-        //         duration: 2000,
-        //         moveBelow: true,
-        //         onUpdate: (progress: number) => {
-        //             fx.progress = progress
-        //         },
-        //     })
-        //     // const pixelated = this.cameras.main.postFX.addPixelate(-1)
-        //     // this.add.tween({
-        //     //     targets: pixelated,
-        //     //     duration: 1000,
-        //     //     amount: 40,
-        //     //     onComplete: () => {
-        //     //         this.cameras.main.fadeOut(100)
-        //     //         if (this.scene.isSleeping('MenuScene')) {
-        //     //             this.scene.wake('MenuScene')
-        //     //             this.scene.sleep('GameScene')
-        //     //         } else {
-        //     //             this.scene.switch('MenuScene')
-        //     //         }
-        //     //     },
-        //     // })
-        // })
-        this.pausePopup = new PausePopup(this)
-        this.gameOverPopup = new GameOverPopup(this)
+        // this.pausePopup = new PausePopup(this)
+        // this.gameOverPopup = new GameOverPopup(this)
         // create tilemap from tiled JSON
         this.map = this.make.tilemap({ key: 'levelMap' })
 
@@ -92,13 +56,6 @@ export class GameScene extends Phaser.Scene {
             0
         ) as Phaser.Tilemaps.TilemapLayer
 
-        // this.layer2 = this.map.createLayer(
-        //     // 'tileLayer',
-        //     'foregroundLayer',
-        //     this.tileset2,
-        //     0,
-        //     0
-        // ) as Phaser.Tilemaps.TilemapLayer
         this.layer.setCollisionByProperty({ collide: true }).setDepth(-10)
 
         this.obstacles = this.add.group({
@@ -166,38 +123,9 @@ export class GameScene extends Phaser.Scene {
             )
         }
 
-        // this.enemies.children.each((enemy: Enemy) => {
-        //     this.physics.add.overlap(
-        //         this.player.getBullets(),
-        //         enemy,
-        //         this.playerBulletHitEnemy as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback,
-        //         undefined,
-        //         this
-        //     )
-        //     this.physics.add.overlap(
-        //         enemy.getBullets(),
-        //         this.player,
-        //         this.enemyBulletHitPlayer as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback,
-        //         undefined
-        //     )
-
-        //     this.physics.add.collider(
-        //         enemy.getBullets(),
-        //         this.obstacles,
-        //         this.bulletHitObstacles as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback,
-        //         undefined
-        //     )
-        //     this.physics.add.collider(
-        //         enemy.getBullets(),
-        //         this.layer,
-        //         this.bulletHitLayer as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback,
-        //         undefined
-        //     )
-        // }, this)
-
         this.cameras.main.startFollow(this.player)
-        // this.pausePopup = PausePopup.getInstance(this)
-        // this.gameOverPopup = GameOverPopup.getInstance(this)
+        this.pausePopup = PausePopup.getInstance(this)
+        this.gameOverPopup = GameOverPopup.getInstance(this)
         this.add
             .bitmapText(0, 0, 'font', 'II', 100)
             .setInteractive()
@@ -311,22 +239,22 @@ export class GameScene extends Phaser.Scene {
         }
     }
 
-    playExplosionEffect(x: number, y: number) {
+    private playExplosionEffect(x: number, y: number) {
         if (!this.explosionSprite.visible) this.explosionSprite.setVisible(true)
         this.explosionSprite.setPosition(x, y).play('explosion', true)
     }
 
-    pauseScene() {
+    private pauseScene() {
         this.updateState = false
         this.tweens.pauseAll()
     }
 
-    resumeScene() {
+    private resumeScene() {
         this.updateState = true
         this.tweens.resumeAll()
     }
 
-    restart() {
+    private restart() {
         this.scoreUI.setScore(0)
         this.player.reset()
         for (const enemy of this.enemies.getChildren()) {
@@ -334,7 +262,7 @@ export class GameScene extends Phaser.Scene {
         }
     }
 
-    observerMessage(message: string) {
+    public observerMessage(message: string) {
         console.log('GameScene got Message: ' + message)
         switch (message) {
             case 'PausePopup replay was press':
@@ -350,7 +278,6 @@ export class GameScene extends Phaser.Scene {
                 this.restart()
                 break
             case 'Quit Button was press':
-                // console.log(this.scene)
                 this.restart()
                 this.scene.switch('MenuScene')
                 break

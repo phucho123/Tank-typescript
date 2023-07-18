@@ -31,41 +31,7 @@ export class Bullet extends Phaser.GameObjects.Image {
         )
     }
 
-    update(): void {
-        // const vx = Math.cos(this.rotation - Math.PI / 2) * this.bulletSpeed
-        // const vy = Math.sin(this.rotation - Math.PI / 2) * this.bulletSpeed
-        // this.body.setVelocity(vx, vy)
+    public update(): void {
         ///
-        // this.x += this.bulletSpeed * this.body.velocity.x * Math.cos(this.rotation - Math.PI / 2)
-        // this.y += this.bulletSpeed * this.body.velocity.y * Math.sin(this.rotation - Math.PI / 2)
-        // this.scene.physics.velocityFromRotation(
-        //     this.rotation - Math.PI / 2,
-        //     this.bulletSpeed,
-        //     this.body.velocity
-        // )
     }
-
-    // destroy() {
-    //     this.setActive(false)
-    //     this.setVisible(false)
-    // }
-
-    // public setParams(x: number, y: number, rotation: number, texture: string) {
-    //     if (this.visible) {
-    //         this.setX(x)
-    //         this.setY(y)
-    //         this.rotation = rotation
-    //         this.setTexture(texture)
-    //         this.initImage()
-    //         this.scene.add.existing(this)
-    //     } else {
-    //         this.setX(x)
-    //         this.setY(y)
-    //         this.body.x = x
-    //         this.rotation = rotation
-    //         this.setTexture(texture)
-    //         this.setVisible(true)
-    //         this.initImage()
-    //     }
-    // }
 }

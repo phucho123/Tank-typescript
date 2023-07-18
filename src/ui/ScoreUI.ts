@@ -16,7 +16,7 @@ export class ScoreUI extends Phaser.GameObjects.Container {
         return ScoreUI.instance
     }
 
-    init() {
+    private init() {
         this.score = 0
         this.highScore = 0
         this.scoreDisplay = this.scene.add
@@ -35,7 +35,7 @@ export class ScoreUI extends Phaser.GameObjects.Container {
             .setScrollFactor(0)
     }
 
-    setScore(score: number) {
+    public setScore(score: number) {
         this.score = score
         this.scoreDisplay.setText(`Score: ${this.score}`)
         if (this.score > this.highScore) {
@@ -44,7 +44,7 @@ export class ScoreUI extends Phaser.GameObjects.Container {
         }
     }
 
-    addScore(score: number) {
+    public addScore(score: number) {
         this.score += score
         this.scoreDisplay.setText(`Score: ${this.score}`)
         if (this.score > this.highScore) {
@@ -53,11 +53,11 @@ export class ScoreUI extends Phaser.GameObjects.Container {
         }
     }
 
-    getScore() {
+    public getScore() {
         return this.score
     }
 
-    getHighScore() {
+    public getHighScore() {
         return this.highScore
     }
 }

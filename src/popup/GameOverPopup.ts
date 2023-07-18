@@ -18,7 +18,7 @@ export class GameOverPopup extends Phaser.GameObjects.Container {
         return GameOverPopup.instance
     }
 
-    init() {
+    private init() {
         this.observable = Observable.getInstance()
         this.observable.subscribe(this)
         this.overlay = this.scene.add
@@ -91,7 +91,7 @@ export class GameOverPopup extends Phaser.GameObjects.Container {
         this.setVisible(false)
     }
 
-    open(score: number, highScore: number) {
+    public open(score: number, highScore: number) {
         this.scoreDisplay.setText(`Score\n\n${score}`)
         this.highScoreDisplay.setText(`High Score\n\n${highScore}`)
         this.setScale(0)
@@ -108,7 +108,7 @@ export class GameOverPopup extends Phaser.GameObjects.Container {
         })
     }
 
-    close() {
+    public close() {
         this.observable.notify('Closed GameOver Popup')
         this.overlay.setVisible(false)
         this.scene.add.tween({
@@ -119,7 +119,7 @@ export class GameOverPopup extends Phaser.GameObjects.Container {
         })
     }
 
-    observerMessage(_message: string) {
+    public observerMessage(_message: string) {
         ///
     }
 }
