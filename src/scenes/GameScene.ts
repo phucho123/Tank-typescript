@@ -1,7 +1,7 @@
-import { Player } from '../objects/player'
-import { Enemy } from '../objects/enemy'
-import { Obstacle } from '../objects/obstacles/obstacle'
-import { Bullet } from '../objects/bullet'
+import { Player } from '../objects/Player'
+import { Enemy } from '../objects/Enemy'
+import { Obstacle } from '../objects/obstacles/Obstacle'
+import { Bullet } from '../objects/Bullet'
 import { PausePopup } from '../popup/PausePopup'
 import { GameOverPopup } from '../popup/GameOverPopup'
 import { Observable } from '../Observable'
@@ -351,6 +351,7 @@ export class GameScene extends Phaser.Scene {
                 break
             case 'Quit Button was press':
                 // console.log(this.scene)
+                this.restart()
                 this.scene.switch('MenuScene')
                 break
             default:

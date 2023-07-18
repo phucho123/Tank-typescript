@@ -81,7 +81,10 @@ export class GameOverPopup extends Phaser.GameObjects.Container {
             texture: 'quitButton',
             frame: 0,
         })
-        quit.addFunc(() => this.observable.notify('Quit Button was press'))
+        quit.addFunc(() => {
+            this.observable.notify('Quit Button was press')
+            this.close()
+        })
 
         this.add([img, this.highScoreDisplay, this.scoreDisplay, replayButton, speaker, quit])
         this.setInteractive()
