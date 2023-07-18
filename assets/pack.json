@@ -1,0 +1,157 @@
+{
+  "preload": {
+    "files": [
+      {
+        "type": "tilemapTiledJSON",
+        "key": "levelMap",
+        "url": "./assets/maps/levelMap.json"
+      },
+      {
+        "type": "tilemapTiledJSON",
+        "key": "level1",
+        "url": "./assets/maps/level1.json"
+      },
+      {
+        "type": "bitmapFont",
+        "key": "font",
+        "textureURL": "./assets/font/font.png",
+        "fontDataURL": "./assets/font/font.fnt"
+      },
+      {
+        "type": "bitmapFont",
+        "key": "font2",
+        "textureURL": "./assets/font/font2.png",
+        "fontDataURL": "./assets/font/font2.xml"
+      },
+      {
+        "type": "image",
+        "key": "tankDark",
+        "url": "./assets/sprites/tank-dark.png"
+      },
+      {
+        "type": "image",
+        "key": "tankRed",
+        "url": "./assets/sprites/tank-red.png"
+      },
+      {
+        "type": "image",
+        "key": "barrelRed",
+        "url": "./assets/sprites/barrel-red.png"
+      },
+      {
+        "type": "image",
+        "key": "barrelDark",
+        "url": "./assets/sprites/barrel-dark.png"
+      },
+      {
+        "type": "image",
+        "key": "bulletBlue",
+        "url": "./assets/sprites/bullet-blue.png"
+      },
+      {
+        "type": "image",
+        "key": "bulletRed",
+        "url": "./assets/sprites/bullet-red.png"
+      },
+      {
+        "type": "image",
+        "key": "tiles",
+        "url": "./assets/tiles/tiles.png"
+      },
+      {
+        "type": "image",
+        "key": "wall",
+        "url": "./assets/tiles/towers.png"
+      },
+      {
+        "type": "image",
+        "key": "barrelGreyTop",
+        "url": "./assets/obstacles/barrel-grey-top.png"
+      },
+      {
+        "type": "image",
+        "key": "barrelGreySideRust",
+        "url": "./assets/obstacles/barrel-grey-side-rust.png"
+      },
+      {
+        "type": "image",
+        "key": "barrelGreySide",
+        "url": "./assets/obstacles/barrel-grey-side.png"
+      },
+      {
+        "type": "image",
+        "key": "barrelRedTop",
+        "url": "./assets/obstacles/barrel-red-top.png"
+      },
+      {
+        "type": "image",
+        "key": "barrelRedSide",
+        "url": "./assets/obstacles/barrel-red-side.png"
+      },
+      {
+        "type": "image",
+        "key": "treeSmall",
+        "url": "./assets/obstacles/tree-small.png"
+      },
+      {
+        "type": "image",
+        "key": "treeLarge",
+        "url": "./assets/obstacles/tree-large.png"
+      },
+      {
+        "type": "image",
+        "key": "popupWindow",
+        "url": "./assets/images/popup-window.png"
+      },
+      {
+        "type": "image",
+        "key": "replayButton",
+        "url": "./assets/images/replay-button.png"
+      },
+      {
+        "type": "image",
+        "key": "resumeButton",
+        "url": "./assets/images/resume-button.png"
+      },
+      {
+        "type": "image",
+        "key": "muteButton",
+        "url": "./assets/images/mute-button.png"
+      },
+      {
+        "type": "image",
+        "key": "unmuteButton",
+        "url": "./assets/images/unmute-button.png"
+      },
+      {
+        "type": "image",
+        "key": "barrel2Red",
+        "url": "./assets/sprites/barrel2-red.png"
+      },
+      {
+        "type": "image",
+        "key": "barrel3Red",
+        "url": "./assets/sprites/barrel3-red.png"
+      },
+      {
+        "type": "spritesheet",
+        "key": "explosion",
+        "url": "./assets/sprites/explosion.png",
+        "frameConfig": {
+          "frameWidth": 128,
+          "frameHeight": 128
+        }
+      },
+      {
+        "type": "image",
+        "key": "quitButton",
+        "url": "./assets/images/quit-button.png"
+      },
+      {
+        "type": "image",
+        "key": "backgroundMenu",
+        "url": "./assets/images/background-menu.png"
+      }
+    ]
+  }
+}
