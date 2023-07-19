@@ -159,11 +159,6 @@ export class GameScene extends Phaser.Scene {
         // this.debug()
     }
 
-    // debug() {
-    //     this.cameras.main.stopFollow()
-    //     this.cameras.main.zoom = 0.2
-    // }
-
     update(): void {
         if (!this.updateState) return
         this.player.update()
@@ -182,19 +177,6 @@ export class GameScene extends Phaser.Scene {
                 enemy2.angle = (angle + Math.PI / 2) * Phaser.Math.RAD_TO_DEG
             }
         }
-        // this.enemies.children.each((enemy: Enemy) => {
-        //     enemy.update()
-        //     if (this.player.active && enemy.active) {
-        //         const angle = Phaser.Math.Angle.Between(
-        //             enemy.body.x,
-        //             enemy.body.y,
-        //             this.player.body.x,
-        //             this.player.body.y
-        //         )
-
-        //         enemy.getBarrel().angle = (angle + Math.PI / 2) * Phaser.Math.RAD_TO_DEG
-        //     }
-        // }, this)
     }
 
     private convertObjects(): void {
