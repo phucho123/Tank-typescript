@@ -305,7 +305,7 @@ export class Player extends Phaser.GameObjects.Image {
                 this.damage = 0.6
                 break
             case 3:
-                this.barrel.setTexture('barrel2Red')
+                this.barrel.setTexture('barrel3Red')
                 this.damage = 1
                 break
             default:
@@ -327,5 +327,9 @@ export class Player extends Phaser.GameObjects.Image {
         this.shield = 0
         this.postFX.clear()
         this.barrel.postFX.clear()
+    }
+
+    public observerMessage(message: string) {
+        ///
     }
 }

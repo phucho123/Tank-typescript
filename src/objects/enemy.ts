@@ -15,6 +15,7 @@ export class Enemy extends Phaser.GameObjects.Image {
 
     // game objects
     private bullets: Phaser.GameObjects.Group
+    private originPosition: { x: number; y: number }
 
     public getBarrel(): Phaser.GameObjects.Image {
         return this.barrel
@@ -28,6 +29,7 @@ export class Enemy extends Phaser.GameObjects.Image {
         super(aParams.scene, aParams.x, aParams.y, aParams.texture, aParams.frame)
 
         this.initContainer()
+        this.originPosition = { x: aParams.x, y: aParams.y }
         this.scene.add.existing(this)
     }
 
@@ -57,18 +59,18 @@ export class Enemy extends Phaser.GameObjects.Image {
         })
 
         // tweens
-        this.scene.tweens.add({
-            targets: this,
-            props: { y: this.y - 200 },
-            delay: 0,
-            duration: 2000,
-            ease: 'Linear',
-            easeParams: null,
-            hold: 0,
-            repeat: -1,
-            repeatDelay: 0,
-            yoyo: true,
-        })
+        // this.scene.tweens.add({
+        //     targets: this,
+        //     props: { y: this.y - 200 },
+        //     delay: 0,
+        //     duration: 2000,
+        //     ease: 'Linear',
+        //     easeParams: null,
+        //     hold: 0,
+        //     repeat: -1,
+        //     repeatDelay: 0,
+        //     yoyo: true,
+        // })
 
         // physics
         this.scene.physics.world.enable(this)
@@ -80,6 +82,11 @@ export class Enemy extends Phaser.GameObjects.Image {
             this.barrel.y = this.y
             this.lifeBar.x = this.x
             this.lifeBar.y = this.y
+            this.scene.physics.velocityFromRotation(
+                this.rotation - Math.PI / 2,
+                this.speed,
+                this.body.velocity
+            )
             this.handleShooting()
         } else {
             // this.destroy()
@@ -100,6 +107,7 @@ export class Enemy extends Phaser.GameObjects.Image {
         this.setVisible(true)
         this.barrel.setVisible(true)
         this.lifeBar.setVisible(true)
+        this.setPosition(this.originPosition.x, this.originPosition.y)
     }
 
     private handleShooting(): void {
@@ -156,5 +164,9 @@ export class Enemy extends Phaser.GameObjects.Image {
         this.reborn()
         this.health = 1
         this.redrawLifebar()
+    }
+
+    public stopMoving() {
+        this.body.setVelocity(0, 0)
     }
 }

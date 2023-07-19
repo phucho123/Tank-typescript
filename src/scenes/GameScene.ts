@@ -79,6 +79,8 @@ export class GameScene extends Phaser.Scene {
         // collider layer and obstacles
         this.physics.add.collider(this.player, this.layer)
         this.physics.add.collider(this.player, this.obstacles)
+        this.physics.add.collider(this.enemies, this.obstacles)
+        this.physics.add.collider(this.enemies, this.layer)
 
         // collider for bullets
         this.physics.add.collider(
@@ -176,6 +178,7 @@ export class GameScene extends Phaser.Scene {
                 )
 
                 enemy2.getBarrel().angle = (angle + Math.PI / 2) * Phaser.Math.RAD_TO_DEG
+                enemy2.angle = (angle + Math.PI / 2) * Phaser.Math.RAD_TO_DEG
             }
         }
         // this.enemies.children.each((enemy: Enemy) => {
@@ -251,7 +254,7 @@ export class GameScene extends Phaser.Scene {
     private enemyBulletHitPlayer(bullet: Bullet, player: Player): void {
         bullet.destroy()
         player.updateHealth()
-        this.audioManager.playHit()
+        // this.audioManager.playHit()
         if (!player.active && player.visible) {
             this.playExplosionEffect(player.x, player.y)
             // this.audioManager.playExplosion()
@@ -264,7 +267,7 @@ export class GameScene extends Phaser.Scene {
     private playerBulletHitEnemy(bullet: Bullet, enemy: Enemy): void {
         bullet.destroy()
         enemy.updateHealth(this.player.getDamage())
-        this.audioManager.playHit()
+        // this.audioManager.playHit()
         if (!enemy.active && enemy.visible) {
             this.playExplosionEffect(enemy.x, enemy.y)
             // this.audioManager.playExplosion()
@@ -337,16 +340,19 @@ export class GameScene extends Phaser.Scene {
         switch (message) {
             case 'PausePopup replay was press':
                 this.restart()
-                this.audioManager.playHitButton()
+                // this.audioManager.playHitButton()
                 break
             case 'Opened Pause Popup':
                 this.pauseScene()
-                this.audioManager.playHitButton()
+                // this.audioManager.playHitButton()
                 this.player.active = false
+                for (const enemy of this.enemies.getChildren()) {
+                    (<Enemy>enemy).stopMoving()
+                }
                 break
             case 'Closed Pause Popup':
                 this.resumeScene()
-                this.audioManager.playHitButton()
+                // this.audioManager.playHitButton()
                 this.player.active = true
                 break
             case 'Closed GameOver Popup':
@@ -355,18 +361,18 @@ export class GameScene extends Phaser.Scene {
                 break
             case 'Quit Button was press':
                 this.restart()
-                this.audioManager.playHitButton()
+                // this.audioManager.playHitButton()
                 this.scene.switch('MenuScene')
                 break
             case 'Speaker was mute':
-                this.audioManager.mute()
+                // this.audioManager.mute()
                 break
             case 'Speaker was unmute':
-                this.audioManager.unMute()
-                this.audioManager.playHitButton()
+                // this.audioManager.unMute()
+                // this.audioManager.playHitButton()
                 break
             case 'Player shooting':
-                this.audioManager.playShooting()
+                // this.audioManager.playShooting()
                 break
             default:
                 break
