@@ -161,6 +161,11 @@
         "type": "image",
         "key": "shield",
         "url": "./assets/images/shield.png"
+      },
+      {
+        "type": "audio",
+        "key": "hitButton",
+        "url": "./assets/sounds/hit-button.wav"
       }
     ]
   }

@@ -7,6 +7,7 @@ import { GameOverPopup } from '../popup/GameOverPopup'
 import { Observable } from '../Observable'
 import { ScoreUI } from '../ui/ScoreUI'
 import { Collectible } from '../objects/Collectible'
+import { AudioManager } from '../audio/AudioManager'
 
 export class GameScene extends Phaser.Scene {
     private map: Phaser.Tilemaps.Tilemap
@@ -26,6 +27,7 @@ export class GameScene extends Phaser.Scene {
     private observable: Observable
     private updateState: boolean
     private scoreUI: ScoreUI
+    private audioManager: AudioManager
 
     constructor() {
         super({
@@ -40,6 +42,7 @@ export class GameScene extends Phaser.Scene {
     public create(): void {
         console.log('Create game Scene')
 
+        this.audioManager = AudioManager.getInstance(this)
         this.updateState = true
         this.observable = Observable.getInstance()
         this.scoreUI = ScoreUI.getInstance(this)
@@ -248,23 +251,29 @@ export class GameScene extends Phaser.Scene {
     private enemyBulletHitPlayer(bullet: Bullet, player: Player): void {
         bullet.destroy()
         player.updateHealth()
+        this.audioManager.playHit()
         if (!player.active && player.visible) {
             this.playExplosionEffect(player.x, player.y)
+            // this.audioManager.playExplosion()
             this.gameOverPopup.open(this.scoreUI.getScore(), this.scoreUI.getHighScore())
             this.player.setActive(false)
+            // this.audioManager.playDefeat()
         }
     }
 
     private playerBulletHitEnemy(bullet: Bullet, enemy: Enemy): void {
         bullet.destroy()
         enemy.updateHealth(this.player.getDamage())
+        this.audioManager.playHit()
         if (!enemy.active && enemy.visible) {
             this.playExplosionEffect(enemy.x, enemy.y)
+            // this.audioManager.playExplosion()
             this.scoreUI.addScore(100)
             const enemyRemain = this.enemies.getChildren().filter((enemy) => enemy.active)
             if (enemyRemain.length <= 0) {
                 this.gameOverPopup.open(this.scoreUI.getScore(), this.scoreUI.getHighScore())
                 this.player.setActive(false)
+                // this.audioManager.playVictory()
             }
         }
     }
@@ -328,21 +337,36 @@ export class GameScene extends Phaser.Scene {
         switch (message) {
             case 'PausePopup replay was press':
                 this.restart()
+                this.audioManager.playHitButton()
                 break
             case 'Opened Pause Popup':
                 this.pauseScene()
+                this.audioManager.playHitButton()
                 this.player.active = false
                 break
             case 'Closed Pause Popup':
                 this.resumeScene()
+                this.audioManager.playHitButton()
                 this.player.active = true
                 break
             case 'Closed GameOver Popup':
                 this.restart()
+                this.audioManager.playHitButton()
                 break
             case 'Quit Button was press':
                 this.restart()
+                this.audioManager.playHitButton()
                 this.scene.switch('MenuScene')
+                break
+            case 'Speaker was mute':
+                this.audioManager.mute()
+                break
+            case 'Speaker was unmute':
+                this.audioManager.unMute()
+                this.audioManager.playHitButton()
+                break
+            case 'Player shooting':
+                this.audioManager.playShooting()
                 break
             default:
                 break

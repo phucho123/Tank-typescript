@@ -1,5 +1,6 @@
 import { Bullet } from './Bullet'
 import { IImageConstructor } from '../interfaces/image.interface'
+import { Observable } from '../Observable'
 
 export class Player extends Phaser.GameObjects.Image {
     body: Phaser.Physics.Arcade.Body
@@ -24,6 +25,7 @@ export class Player extends Phaser.GameObjects.Image {
     private MoveDownKey: Phaser.Input.Keyboard.Key
     private damage: number
     private shield: number
+    private observable: Observable
     // private shootingKey: Phaser.Input.Keyboard.Key
 
     public getBullets(): Phaser.GameObjects.Group {
@@ -38,6 +40,8 @@ export class Player extends Phaser.GameObjects.Image {
     }
 
     private initImage() {
+        this.observable = Observable.getInstance()
+        this.observable.subscribe(this)
         // variables
         this.health = 1
         this.shield = 0
@@ -236,6 +240,7 @@ export class Player extends Phaser.GameObjects.Image {
                 // const bullet = this.bullets.get() as Bullet
                 // bullet.setParams(this.barrel.x, this.barrel.y, this.barrel.rotation, 'bulletBlue')
                 this.lastShoot = this.scene.time.now + 10
+                this.observable.notify('Player shooting')
             }
             // const bullet = this.bullets.get() as Bullet
             // if (bullet)
