@@ -38,18 +38,27 @@ export class GameOverPopup extends Phaser.GameObjects.Container {
         const img = this.scene.add.image(0, 0, 'popupWindow')
         img.setScale(1000 / img.width, 1000 / img.height)
 
+        const highScoreText = this.scene.add
+            .bitmapText(0, -200, 'font', `High Score`, 48)
+            .setOrigin(0.5)
+            .setDepth(2)
+            .setTint(0x8c5308)
         this.highScoreDisplay = this.scene.add
-            .bitmapText(0, -200, 'font2', `High Score\n\n${0}`, 48)
+            .bitmapText(0, -150, 'font2', `${0}`, 48)
+            .setOrigin(0.5)
+            .setDepth(2)
+            .setTint(0x777a7a)
+
+        const scoreText = this.scene.add
+            .bitmapText(0, -50, 'font', `Score`, 48)
             .setOrigin(0.5)
             .setDepth(2)
             .setTint(0x8c5308)
-        this.highScoreDisplay.align = 1
         this.scoreDisplay = this.scene.add
-            .bitmapText(0, 0, 'font2', `Score\n\n${0}`, 48)
+            .bitmapText(0, 0, 'font2', `${0}`, 48)
             .setOrigin(0.5)
             .setDepth(2)
-            .setTint(0x8c5308)
-        this.scoreDisplay.align = 1
+            .setTint(0x777a7a)
 
         const replayButton = new Button({
             scene: this.scene,
@@ -86,14 +95,23 @@ export class GameOverPopup extends Phaser.GameObjects.Container {
             this.close()
         })
 
-        this.add([img, this.highScoreDisplay, this.scoreDisplay, replayButton, speaker, quit])
+        this.add([
+            img,
+            highScoreText,
+            scoreText,
+            this.highScoreDisplay,
+            this.scoreDisplay,
+            replayButton,
+            speaker,
+            quit,
+        ])
         this.setInteractive()
         this.setVisible(false)
     }
 
     public open(score: number, highScore: number) {
-        this.scoreDisplay.setText(`Score\n\n${score}`)
-        this.highScoreDisplay.setText(`High Score\n\n${highScore}`)
+        this.scoreDisplay.setText(`${score}`)
+        this.highScoreDisplay.setText(`${highScore}`)
         this.setScale(0)
         this.setVisible(true)
         this.scene.add.tween({

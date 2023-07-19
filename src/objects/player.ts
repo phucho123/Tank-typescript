@@ -68,10 +68,10 @@ export class Player extends Phaser.GameObjects.Image {
         // input
         if (this.scene.input.keyboard) {
             // this.cursors = this.scene.input.keyboard.createCursorKeys()
-            this.rotateKeyLeft = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
-            this.rotateKeyRight = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
-            this.MoveUpKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
-            this.MoveDownKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
+            this.rotateKeyLeft = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
+            this.rotateKeyRight = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
+            this.MoveUpKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
+            this.MoveDownKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
             // this.shootingKey = this.scene.input.keyboard.addKey(
             //     Phaser.Input.Keyboard.KeyCodes.SPACE
             // )
@@ -80,13 +80,11 @@ export class Player extends Phaser.GameObjects.Image {
         // physics
         this.scene.physics.world.enable(this)
         this.scene.input.on('pointerdown', () => {
-            this.handleShooting()
+            if (this.active) this.handleShooting()
         })
     }
 
     public update(): void {
-        // console.log(this.scene.input.mousePointer.x, this.scene.input.mousePointer.y)
-        // console.log(this.scene.input.mousePointer.x, this.scene.input.mousePointer.y)
         let angle = Math.atan2(
             this.scene.input.mousePointer.y - this.scene.cameras.main.height / 2,
             this.scene.input.mousePointer.x - this.scene.cameras.main.width / 2

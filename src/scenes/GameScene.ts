@@ -11,14 +11,13 @@ export class GameScene extends Phaser.Scene {
     private map: Phaser.Tilemaps.Tilemap
     private tileset: Phaser.Tilemaps.Tileset
     private layer: Phaser.Tilemaps.TilemapLayer
-    private bitmapTexts: Phaser.GameObjects.BitmapText[] = []
 
     private player: Player
     private enemies: Phaser.GameObjects.Group
     private obstacles: Phaser.GameObjects.Group
     private explosionSprite: Phaser.GameObjects.Sprite
 
-    private target: Phaser.Math.Vector2
+    // private target: Phaser.Math.Vector2
 
     private pausePopup: PausePopup
     private gameOverPopup: GameOverPopup
@@ -37,13 +36,12 @@ export class GameScene extends Phaser.Scene {
     }
 
     public create(): void {
+        console.log('Create game Scene')
+
         this.updateState = true
         this.observable = Observable.getInstance()
         this.scoreUI = ScoreUI.getInstance(this)
         this.observable.subscribe(this)
-        console.log('Create game Scene')
-        // this.pausePopup = new PausePopup(this)
-        // this.gameOverPopup = new GameOverPopup(this)
         // create tilemap from tiled JSON
         this.map = this.make.tilemap({ key: 'levelMap' })
 
@@ -131,7 +129,9 @@ export class GameScene extends Phaser.Scene {
             .setInteractive()
             .on('pointerdown', () => {
                 // this.stopUpdate()
-                if (this.updateState) this.pausePopup.open()
+                if (this.updateState) {
+                    this.pausePopup.open()
+                }
             })
             .setScrollFactor(0)
             .setDepth(-10)
@@ -223,6 +223,7 @@ export class GameScene extends Phaser.Scene {
             bullet.destroy()
             this.playExplosionEffect(player.x, player.y)
             this.gameOverPopup.open(this.scoreUI.getScore(), this.scoreUI.getHighScore())
+            this.player.setActive(false)
         }
     }
 
@@ -270,9 +271,11 @@ export class GameScene extends Phaser.Scene {
                 break
             case 'Opened Pause Popup':
                 this.pauseScene()
+                this.player.active = false
                 break
             case 'Closed Pause Popup':
                 this.resumeScene()
+                this.player.active = true
                 break
             case 'Closed GameOver Popup':
                 this.restart()
