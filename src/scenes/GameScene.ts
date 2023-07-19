@@ -6,6 +6,7 @@ import { PausePopup } from '../popup/PausePopup'
 import { GameOverPopup } from '../popup/GameOverPopup'
 import { Observable } from '../Observable'
 import { ScoreUI } from '../ui/ScoreUI'
+import { Collectible } from '../objects/Collectible'
 
 export class GameScene extends Phaser.Scene {
     private map: Phaser.Tilemaps.Tilemap
@@ -15,6 +16,7 @@ export class GameScene extends Phaser.Scene {
     private player: Player
     private enemies: Phaser.GameObjects.Group
     private obstacles: Phaser.GameObjects.Group
+    private collectibles: Phaser.GameObjects.Group
     private explosionSprite: Phaser.GameObjects.Sprite
 
     // private target: Phaser.Math.Vector2
@@ -65,6 +67,10 @@ export class GameScene extends Phaser.Scene {
             /*classType: Enemy*/
         })
 
+        this.collectibles = this.add.group({
+            ///
+        })
+
         this.convertObjects()
 
         // collider layer and obstacles
@@ -84,6 +90,13 @@ export class GameScene extends Phaser.Scene {
             this.player.getBullets(),
             this.obstacles,
             this.bulletHitObstacles as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback,
+            undefined,
+            this
+        )
+        this.physics.add.overlap(
+            this.player,
+            this.collectibles,
+            this.playerOverlapCollectible as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback,
             undefined,
             this
         )
@@ -137,7 +150,13 @@ export class GameScene extends Phaser.Scene {
             .setDepth(-10)
 
         this.explosionSprite = this.add.sprite(0, 0, '').setVisible(false).setScale(2)
+        // this.debug()
     }
+
+    // debug() {
+    //     this.cameras.main.stopFollow()
+    //     this.cameras.main.zoom = 0.2
+    // }
 
     update(): void {
         if (!this.updateState) return
@@ -195,6 +214,15 @@ export class GameScene extends Phaser.Scene {
                 })
 
                 this.enemies.add(enemy)
+            } else if (object.type == 'collectible') {
+                const collectible = new Collectible({
+                    scene: this,
+                    x: object.x,
+                    y: object.y,
+                    texture: object.name,
+                })
+
+                this.collectibles.add(collectible)
             } else {
                 const obstacle = new Obstacle({
                     scene: this,
@@ -218,9 +246,9 @@ export class GameScene extends Phaser.Scene {
     }
 
     private enemyBulletHitPlayer(bullet: Bullet, player: Player): void {
+        bullet.destroy()
         player.updateHealth()
         if (!player.active && player.visible) {
-            bullet.destroy()
             this.playExplosionEffect(player.x, player.y)
             this.gameOverPopup.open(this.scoreUI.getScore(), this.scoreUI.getHighScore())
             this.player.setActive(false)
@@ -228,15 +256,44 @@ export class GameScene extends Phaser.Scene {
     }
 
     private playerBulletHitEnemy(bullet: Bullet, enemy: Enemy): void {
-        enemy.updateHealth()
+        bullet.destroy()
+        enemy.updateHealth(this.player.getDamage())
         if (!enemy.active && enemy.visible) {
-            bullet.destroy()
             this.playExplosionEffect(enemy.x, enemy.y)
             this.scoreUI.addScore(100)
             const enemyRemain = this.enemies.getChildren().filter((enemy) => enemy.active)
             if (enemyRemain.length <= 0) {
                 this.gameOverPopup.open(this.scoreUI.getScore(), this.scoreUI.getHighScore())
+                this.player.setActive(false)
             }
+        }
+    }
+
+    private playerOverlapCollectible(player: Player, collectible: Collectible) {
+        if (!collectible.active) return
+        switch (collectible.texture.key) {
+            case 'health':
+                this.player.fullHealth()
+                collectible.destroy()
+                break
+            case 'barrelRed':
+                this.player.setBarrel(1)
+                collectible.destroy()
+                break
+            case 'barrel2Red':
+                this.player.setBarrel(2)
+                collectible.destroy()
+                break
+            case 'barrel3Red':
+                this.player.setBarrel(3)
+                collectible.destroy()
+                break
+            case 'shield':
+                this.player.addShield()
+                collectible.destroy()
+                break
+            default:
+                break
         }
     }
 
@@ -260,6 +317,9 @@ export class GameScene extends Phaser.Scene {
         this.player.reset()
         for (const enemy of this.enemies.getChildren()) {
             (<Enemy>enemy).reset()
+        }
+        for (const collectible of this.collectibles.getChildren()) {
+            (<Collectible>collectible).reset()
         }
     }
 

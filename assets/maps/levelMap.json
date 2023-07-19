@@ -176,6 +176,85 @@
         },
         {
           "height": 80,
+          "id": -1,
+          "name": "health",
+          "rotation": 0,
+          "type": "collectible",
+          "visible": true,
+          "width": 80,
+          "x": 900,
+          "y": 800
+        },
+        {
+          "height": 80,
+          "id": -1,
+          "name": "barrel2Red",
+          "rotation": 0,
+          "type": "collectible",
+          "visible": true,
+          "width": 80,
+          "x": 1500,
+          "y": 100
+        },
+        {
+          "height": 80,
+          "id": -1,
+          "name": "shield",
+          "rotation": 0,
+          "type": "collectible",
+          "visible": true,
+          "width": 80,
+          "x": 700,
+          "y": 600
+        },
+
+        {
+          "height": 80,
+          "id": -1,
+          "name": "health",
+          "rotation": 0,
+          "type": "collectible",
+          "visible": true,
+          "width": 80,
+          "x": 1500,
+          "y": 900
+        },
+
+        {
+          "height": 80,
+          "id": -1,
+          "name": "barrel3Red",
+          "rotation": 0,
+          "type": "collectible",
+          "visible": true,
+          "width": 80,
+          "x": 2000,
+          "y": 2000
+        },
+        {
+          "height": 80,
+          "id": -1,
+          "name": "shield",
+          "rotation": 0,
+          "type": "collectible",
+          "visible": true,
+          "width": 80,
+          "x": 2500,
+          "y":1500
+        },
+        {
+          "height": 80,
+          "id": -1,
+          "name": "shield",
+          "rotation": 0,
+          "type": "collectible",
+          "visible": true,
+          "width": 80,
+          "x": 1000,
+          "y":1500
+        },
+        {
+          "height": 80,
           "id": 119,
           "name": "",
           "rotation": 0,

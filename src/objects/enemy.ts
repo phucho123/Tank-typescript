@@ -140,9 +140,9 @@ export class Enemy extends Phaser.GameObjects.Image {
         this.lifeBar.setDepth(-1)
     }
 
-    public updateHealth(): void {
+    public updateHealth(damage: number): void {
         if (this.health > 0) {
-            this.health -= 1
+            this.health -= damage
             this.redrawLifebar()
         }
         if (this.health <= 0) {

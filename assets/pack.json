@@ -151,6 +151,16 @@
         "type": "image",
         "key": "backgroundMenu",
         "url": "./assets/images/background-menu.png"
+      },
+      {
+        "type": "image",
+        "key": "health",
+        "url": "./assets/images/health.png"
+      },
+      {
+        "type": "image",
+        "key": "shield",
+        "url": "./assets/images/shield.png"
       }
     ]
   }
