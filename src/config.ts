@@ -6,9 +6,9 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
     title: 'Tank',
     url: 'https://github.com/digitsensitive/phaser3-typescript',
     version: '2.0',
-    width: 1600,
-    height: 1200,
-    zoom: 0.6,
+    width: window.innerWidth, //1600
+    height: window.innerHeight, //1200
+    zoom: 1,
     type: Phaser.AUTO,
     parent: 'game',
     scene: [BootScene, MenuScene, GameScene],

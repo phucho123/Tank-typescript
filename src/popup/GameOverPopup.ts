@@ -7,6 +7,7 @@ export class GameOverPopup extends Phaser.GameObjects.Container {
     private scoreDisplay: Phaser.GameObjects.BitmapText
     private overlay: Phaser.GameObjects.Graphics
     private observable: Observable
+    private speaker: Button
     constructor(scene: Phaser.Scene) {
         super(scene)
         this.scene.add.existing(this)
@@ -36,7 +37,7 @@ export class GameOverPopup extends Phaser.GameObjects.Container {
         ).setScrollFactor(0)
 
         const img = this.scene.add.image(0, 0, 'popupWindow')
-        img.setScale(1000 / img.width, 1000 / img.height)
+        img.setScale(800 / img.width, 900 / img.height)
 
         const highScoreText = this.scene.add
             .bitmapText(0, -200, 'font', `High Score`, 48)
@@ -71,16 +72,21 @@ export class GameOverPopup extends Phaser.GameObjects.Container {
             this.close()
         })
 
-        const speaker = new Button({
+        this.speaker = new Button({
             scene: this.scene,
             x: -150,
             y: 200,
             texture: 'unmuteButton',
             frame: 0,
         })
-        speaker.addFunc(() => {
-            if (speaker.texture.key == 'unmuteButton') speaker.setTexture('muteButton')
-            else speaker.setTexture('unmuteButton')
+        this.speaker.addFunc(() => {
+            if (this.speaker.texture.key == 'unmuteButton') {
+                this.speaker.setTexture('muteButton')
+                this.observable.notify('Speaker was mute')
+            } else {
+                this.speaker.setTexture('unmuteButton')
+                this.observable.notify('Speaker was unmute')
+            }
         })
 
         const quit = new Button({
@@ -102,7 +108,7 @@ export class GameOverPopup extends Phaser.GameObjects.Container {
             this.highScoreDisplay,
             this.scoreDisplay,
             replayButton,
-            speaker,
+            this.speaker,
             quit,
         ])
         this.setInteractive()
@@ -137,7 +143,12 @@ export class GameOverPopup extends Phaser.GameObjects.Container {
         })
     }
 
-    public observerMessage(_message: string) {
+    public observerMessage(message: string) {
         ///
+        if (message == 'Speaker was mute') {
+            this.speaker.setTexture('muteButton')
+        } else if (message == 'Speaker was unmute') {
+            this.speaker.setTexture('unmuteButton')
+        }
     }
 }

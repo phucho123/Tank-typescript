@@ -12,7 +12,7 @@ export class Obstacle extends Phaser.GameObjects.Image {
 
     private initImage(): void {
         // image
-        this.setOrigin(0, 0).setDepth(-1)
+        this.setOrigin(0, 0).setDepth(-2)
 
         // physics
         this.scene.physics.world.enable(this)

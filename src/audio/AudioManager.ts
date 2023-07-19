@@ -21,10 +21,10 @@ export class AudioManager {
         this.hitButtonSound = this.scene.sound
             .add('hitButton')
             .setRate(1.5) as Phaser.Sound.NoAudioSound
-        // this.explosionSound = this.scene.sound.add('explosion') as Phaser.Sound.NoAudioSound
+        this.explosionSound = this.scene.sound.add('explosion') as Phaser.Sound.NoAudioSound
         // this.shootingSound = this.scene.sound.add('shoot') as Phaser.Sound.NoAudioSound
 
-        // this.hitSound = this.scene.sound.add('hit') as Phaser.Sound.NoAudioSound
+        this.hitSound = this.scene.sound.add('hit').setRate(2) as Phaser.Sound.NoAudioSound
         // this.victorySound = this.scene.sound.add('victory') as Phaser.Sound.NoAudioSound
         // this.defeatSound = this.scene.sound.add('defeat') as Phaser.Sound.NoAudioSound
     }
@@ -56,18 +56,18 @@ export class AudioManager {
     public mute() {
         this.hitButtonSound.setMute(true)
         this.explosionSound.setMute(true)
-        this.shootingSound.setMute(true)
+        // this.shootingSound.setMute(true)
         this.hitSound.setMute(true)
-        this.victorySound.setMute(true)
-        this.defeatSound.setMute(true)
+        // this.victorySound.setMute(true)
+        // this.defeatSound.setMute(true)
     }
 
     public unMute() {
         this.hitButtonSound.setMute(false)
         this.explosionSound.setMute(false)
-        this.shootingSound.setMute(false)
+        // this.shootingSound.setMute(false)
         this.hitSound.setMute(false)
-        this.victorySound.setMute(false)
-        this.defeatSound.setMute(false)
+        // this.victorySound.setMute(false)
+        // this.defeatSound.setMute(false)
     }
 }

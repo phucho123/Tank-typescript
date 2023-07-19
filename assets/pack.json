@@ -166,6 +166,16 @@
         "type": "audio",
         "key": "hitButton",
         "url": "./assets/sounds/hit-button.wav"
+      },
+      {
+        "type": "audio",
+        "key": "hit",
+        "url": "./assets/sounds/hit.mp3"
+      },
+      {
+        "type": "audio",
+        "key": "explosion",
+        "url": "./assets/sounds/explosion.mp3"
       }
     ]
   }

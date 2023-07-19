@@ -5,6 +5,7 @@ export class PausePopup extends Phaser.GameObjects.Container {
     static instance: PausePopup | null = null
     private overlay: Phaser.GameObjects.Graphics
     private observable: Observable
+    private speaker: Button
 
     constructor(scene: Phaser.Scene) {
         super(scene)
@@ -39,7 +40,7 @@ export class PausePopup extends Phaser.GameObjects.Container {
             .setInteractive()
 
         const img = this.scene.add.image(0, 0, 'popupWindow')
-        img.setScale(1000 / img.width, 1000 / img.height)
+        img.setScale(800 / img.width, 900 / img.height)
 
         const resumeButton = new Button({
             scene: this.scene,
@@ -62,19 +63,24 @@ export class PausePopup extends Phaser.GameObjects.Container {
             this.close()
         })
 
-        const speaker = new Button({
+        this.speaker = new Button({
             scene: this.scene,
             x: 0,
             y: 150,
             texture: 'unmuteButton',
             frame: 0,
         })
-        speaker.addFunc(() => {
-            if (speaker.texture.key == 'unmuteButton') speaker.setTexture('muteButton')
-            else speaker.setTexture('unmuteButton')
+        this.speaker.addFunc(() => {
+            if (this.speaker.texture.key == 'unmuteButton') {
+                this.speaker.setTexture('muteButton')
+                this.observable.notify('Speaker was mute')
+            } else {
+                this.speaker.setTexture('unmuteButton')
+                this.observable.notify('Speaker was unmute')
+            }
         })
 
-        this.add([img, text, resumeButton, replayButton, speaker])
+        this.add([img, text, resumeButton, replayButton, this.speaker])
         this.setScrollFactor(0)
         this.setScale(0)
     }
@@ -103,7 +109,11 @@ export class PausePopup extends Phaser.GameObjects.Container {
         })
     }
 
-    public observerMessage(_message: string) {
-        console.log('PausePopup got Message')
+    public observerMessage(message: string) {
+        if (message == 'Speaker was mute') {
+            this.speaker.setTexture('muteButton')
+        } else if (message == 'Speaker was unmute') {
+            this.speaker.setTexture('unmuteButton')
+        }
     }
 }
