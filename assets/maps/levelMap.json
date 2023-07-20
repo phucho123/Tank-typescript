@@ -340,6 +340,83 @@
           "width": 80,
           "x": 1640,
           "y": 620
+        },
+        {
+          "height": 80,
+          "id": 119,
+          "name": "",
+          "rotation": 0,
+          "type": "enemy",
+          "visible": true,
+          "width": 80,
+          "x": 2000,
+          "y": 800
+        },
+        {
+          "height": 80,
+          "id": 119,
+          "name": "",
+          "rotation": 0,
+          "type": "enemy",
+          "visible": true,
+          "width": 80,
+          "x": 1120,
+          "y": 2000
+        },
+        {
+          "height": 80,
+          "id": 124,
+          "name": "boss",
+          "rotation": 0,
+          "type": "enemy",
+          "visible": true,
+          "width": 80,
+          "x": 2000,
+          "y": 1900
+        },
+        {
+          "height": 80,
+          "id": 124,
+          "name": "",
+          "rotation": 0,
+          "type": "enemy",
+          "visible": true,
+          "width": 80,
+          "x": 500,
+          "y": 1900
+        },
+        {
+          "height": 80,
+          "id": 124,
+          "name": "",
+          "rotation": 0,
+          "type": "enemy",
+          "visible": true,
+          "width": 80,
+          "x": 1000,
+          "y": 700
+        },
+        {
+          "height": 80,
+          "id": 124,
+          "name": "boss",
+          "rotation": 0,
+          "type": "enemy",
+          "visible": true,
+          "width": 80,
+          "x": 1500,
+          "y": 1900
+        },
+        {
+          "height": 80,
+          "id": 124,
+          "name": "boss",
+          "rotation": 0,
+          "type": "enemy",
+          "visible": true,
+          "width": 80,
+          "x": 400,
+          "y": 1900
         }
       ],
       "opacity": 1,
