@@ -316,6 +316,7 @@ export class GameScene extends Phaser.Scene {
 
     private restart() {
         this.gameover = false
+        this.updateState = true
         this.scoreUI.setScore(0)
         this.player.reset()
         for (const enemy of this.enemies.getChildren()) {
@@ -353,7 +354,7 @@ export class GameScene extends Phaser.Scene {
                 break
             case 'Quit Button was press':
                 this.restart()
-                this.updateState = true
+                // this.updateState = true
                 this.audioManager.playHitButton()
                 this.scene.switch('MenuScene')
                 break
@@ -366,6 +367,12 @@ export class GameScene extends Phaser.Scene {
                 break
             case 'Player shooting':
                 // this.audioManager.playShooting()
+                break
+            case 'Game Over Scene was opened':
+                this.updateState = false
+                for (const enemy of this.enemies.getChildren()) {
+                    (<Enemy>enemy).stopMoving()
+                }
                 break
             default:
                 break

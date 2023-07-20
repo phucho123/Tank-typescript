@@ -128,6 +128,7 @@ export class GameOverPopup extends Phaser.GameObjects.Container {
             ease: 'bounce',
             onStart: () => {
                 this.overlay.setVisible(true)
+                this.observable.notify('Game Over Scene was opened')
             },
         })
     }
