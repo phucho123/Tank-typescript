@@ -75,6 +75,8 @@ export class Enemy extends Phaser.GameObjects.Image {
         this.setVisible(false)
         this.barrel.setVisible(false)
         this.lifeBar.setVisible(false)
+        this.setPosition(0, 0)
+        this.barrel.setPosition(0, 0)
     }
 
     private reborn() {

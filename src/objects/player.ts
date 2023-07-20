@@ -184,7 +184,7 @@ export class Player extends Phaser.GameObjects.Image {
         }
 
         if (this.health > 0) {
-            this.health -= 0.0
+            this.health -= 0.05
             this.redrawLifebar()
         }
         if (this.health <= 0) {

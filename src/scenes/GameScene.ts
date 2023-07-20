@@ -244,6 +244,7 @@ export class GameScene extends Phaser.Scene {
             this.audioManager.playExplosion()
             this.gameOverPopup.open(this.scoreUI.getScore(), this.scoreUI.getHighScore())
             this.player.setActive(false)
+            this.updateState = false
             // this.audioManager.playDefeat()
         }
     }
@@ -260,6 +261,7 @@ export class GameScene extends Phaser.Scene {
             if (enemyRemain.length <= 0) {
                 this.gameOverPopup.open(this.scoreUI.getScore(), this.scoreUI.getHighScore())
                 this.player.setActive(false)
+                this.updateState = false
                 // this.audioManager.playVictory()
             }
         }
@@ -341,10 +343,12 @@ export class GameScene extends Phaser.Scene {
                 break
             case 'Closed GameOver Popup':
                 this.restart()
+                this.updateState = true
                 this.audioManager.playHitButton()
                 break
             case 'Quit Button was press':
                 this.restart()
+                this.updateState = true
                 this.audioManager.playHitButton()
                 this.scene.switch('MenuScene')
                 break
