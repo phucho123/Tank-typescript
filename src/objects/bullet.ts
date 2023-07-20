@@ -4,6 +4,7 @@ export class Bullet extends Phaser.GameObjects.Image {
     body: Phaser.Physics.Arcade.Body
 
     private bulletSpeed: number
+    private damage: number
 
     constructor(aParams: IBulletConstructor) {
         super(aParams.scene, aParams.x, aParams.y, aParams.texture, aParams.frame)
@@ -27,9 +28,19 @@ export class Bullet extends Phaser.GameObjects.Image {
             this.bulletSpeed,
             this.body.velocity
         )
+
+        this.damage = 0.05
     }
 
     public update(): void {
         ///
+    }
+
+    public setDamage(damage: number) {
+        this.damage = damage
+    }
+
+    public getDamage() {
+        return this.damage
     }
 }

@@ -90,7 +90,8 @@ export class Player extends Phaser.GameObjects.Image {
             this.lifeBar.y = this.y
             this.handleInput()
         } else {
-            this.destroy()
+            if (this.health <= 0) this.destroy()
+            else this.body.setVelocity(0, 0)
         }
     }
 
@@ -175,16 +176,16 @@ export class Player extends Phaser.GameObjects.Image {
         this.lifeBar.setDepth(-1)
     }
 
-    public updateHealth(): void {
+    public updateHealth(damage: number): void {
         if (this.shield > 0) {
-            this.shield -= 0.05
+            this.shield -= damage
             return
         } else if (this.shield < 0) {
             this.removeShield()
         }
 
         if (this.health > 0) {
-            this.health -= 0.05
+            this.health -= damage
             this.redrawLifebar()
         }
         if (this.health <= 0) {

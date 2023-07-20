@@ -13,6 +13,9 @@ export class Enemy extends Phaser.GameObjects.Image {
 
     private bullets: Phaser.GameObjects.Group
     private originPosition: { x: number; y: number }
+    private tankType: string
+    private damage: number
+    private realHealth: number
 
     public getBarrel(): Phaser.GameObjects.Image {
         return this.barrel
@@ -32,8 +35,10 @@ export class Enemy extends Phaser.GameObjects.Image {
 
     private initContainer() {
         this.health = 1
+        this.realHealth = 1
         this.lastShoot = 0
         this.speed = 100
+        this.damage = 0.05
 
         this.setDepth(-2)
 
@@ -90,17 +95,20 @@ export class Enemy extends Phaser.GameObjects.Image {
     private handleShooting(): void {
         if (this.scene.time.now > this.lastShoot) {
             if (this.bullets.getLength() < 10) {
-                this.bullets.add(
-                    new Bullet({
-                        scene: this.scene,
-                        rotation: this.barrel.rotation,
-                        x: this.barrel.x,
-                        y: this.barrel.y,
-                        texture: 'bulletRed',
-                    })
-                )
+                const bullet = new Bullet({
+                    scene: this.scene,
+                    rotation: this.barrel.rotation,
+                    x: this.barrel.x,
+                    y: this.barrel.y,
+                    texture: 'bulletRed',
+                })
+                if (this.tankType == 'boss') {
+                    bullet.setScale(1.1)
+                    bullet.setDamage(0.25)
+                }
+                this.bullets.add(bullet)
 
-                this.lastShoot = this.scene.time.now + 400
+                this.lastShoot = this.scene.time.now + 800
             }
         }
     }
@@ -116,7 +124,7 @@ export class Enemy extends Phaser.GameObjects.Image {
 
     public updateHealth(damage: number): void {
         if (this.health > 0) {
-            this.health -= damage
+            this.health -= damage / this.realHealth
             this.redrawLifebar()
         }
         if (this.health <= 0) {
@@ -134,5 +142,19 @@ export class Enemy extends Phaser.GameObjects.Image {
 
     public stopMoving() {
         this.body.setVelocity(0, 0)
+    }
+
+    public setTankType(type: string) {
+        this.tankType = type
+        if (this.tankType == 'boss') {
+            this.setScale(2)
+            this.barrel.setScale(2)
+            this.realHealth = 10
+            this.damage = 0.1
+        }
+    }
+
+    public getDamage() {
+        return this.damage
     }
 }
