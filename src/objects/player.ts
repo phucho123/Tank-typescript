@@ -5,19 +5,15 @@ import { Observable } from '../Observable'
 export class Player extends Phaser.GameObjects.Image {
     body: Phaser.Physics.Arcade.Body
 
-
     private health: number
     private lastShoot: number
     private speed: number
 
-
     private barrel: Phaser.GameObjects.Image
     private lifeBar: Phaser.GameObjects.Graphics
 
- 
     private bullets: Phaser.GameObjects.Group
 
-    
     private rotateKeyLeft: Phaser.Input.Keyboard.Key
     private rotateKeyRight: Phaser.Input.Keyboard.Key
     private MoveUpKey: Phaser.Input.Keyboard.Key
@@ -25,7 +21,6 @@ export class Player extends Phaser.GameObjects.Image {
     private damage: number
     private shield: number
     private observable: Observable
- 
 
     public getBullets(): Phaser.GameObjects.Group {
         return this.bullets
@@ -41,16 +36,15 @@ export class Player extends Phaser.GameObjects.Image {
     private initImage() {
         this.observable = Observable.getInstance()
         this.observable.subscribe(this)
-        
+
         this.health = 1
         this.shield = 0
         this.lastShoot = 0
-        this.speed = 300 
-      
+        this.speed = 300
+
         this.setOrigin(0.5, 0.5)
         this.setDepth(-2)
         this.angle = 180
-
 
         this.barrel = this.scene.add.image(this.x, this.y, 'barrelRed')
         this.damage = 0.4
@@ -75,12 +69,10 @@ export class Player extends Phaser.GameObjects.Image {
             this.MoveDownKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
         }
 
-       
         this.scene.physics.world.enable(this)
         this.scene.input.on('pointerdown', () => {
             if (this.active) this.handleShooting()
         })
-       
     }
 
     public update(): void {
@@ -97,10 +89,8 @@ export class Player extends Phaser.GameObjects.Image {
             this.lifeBar.x = this.x
             this.lifeBar.y = this.y
             this.handleInput()
-           
         } else {
             this.destroy()
-            
         }
     }
 
@@ -119,8 +109,6 @@ export class Player extends Phaser.GameObjects.Image {
     }
 
     private handleInput() {
-        
-
         if (this.MoveUpKey.isDown) {
             this.scene.physics.velocityFromRotation(
                 this.rotation - Math.PI / 2,
@@ -137,7 +125,6 @@ export class Player extends Phaser.GameObjects.Image {
             this.body.setVelocity(0, 0)
         }
 
-        
         if (this.rotateKeyLeft.isDown) {
             this.rotation -= 0.05
         } else if (this.rotateKeyRight.isDown) {
@@ -146,7 +133,6 @@ export class Player extends Phaser.GameObjects.Image {
     }
 
     private handleShooting(): void {
-       
         if (this.scene.time.now > this.lastShoot) {
             this.scene.cameras.main.shake(20, 0.005)
             this.scene.tweens.add({
@@ -164,9 +150,7 @@ export class Player extends Phaser.GameObjects.Image {
             })
 
             if (this.bullets.getLength() < 10) {
-                
                 this.bullets.addMultiple([
-                    
                     new Bullet({
                         scene: this.scene,
                         rotation: this.barrel.rotation,
@@ -174,13 +158,11 @@ export class Player extends Phaser.GameObjects.Image {
                         y: this.barrel.y,
                         texture: 'bulletBlue',
                     }),
-                   
                 ])
-                
+
                 this.lastShoot = this.scene.time.now + 10
                 this.observable.notify('Player shooting')
             }
-           
         }
     }
 
@@ -202,7 +184,7 @@ export class Player extends Phaser.GameObjects.Image {
         }
 
         if (this.health > 0) {
-            this.health -= 0.05
+            this.health -= 0.0
             this.redrawLifebar()
         }
         if (this.health <= 0) {
