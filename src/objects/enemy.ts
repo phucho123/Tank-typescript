@@ -4,16 +4,13 @@ import { Bullet } from './Bullet'
 export class Enemy extends Phaser.GameObjects.Image {
     body: Phaser.Physics.Arcade.Body
 
-    // variables
     private health: number
     private lastShoot: number
     private speed: number
 
-    // children
     private barrel: Phaser.GameObjects.Image
     private lifeBar: Phaser.GameObjects.Graphics
 
-    // game objects
     private bullets: Phaser.GameObjects.Group
     private originPosition: { x: number; y: number }
 
@@ -34,12 +31,10 @@ export class Enemy extends Phaser.GameObjects.Image {
     }
 
     private initContainer() {
-        // variables
         this.health = 1
         this.lastShoot = 0
         this.speed = 100
 
-        // image
         this.setDepth(-2)
 
         this.barrel = this.scene.add.image(0, 0, 'barrelDark')
@@ -49,30 +44,13 @@ export class Enemy extends Phaser.GameObjects.Image {
         this.lifeBar = this.scene.add.graphics()
         this.redrawLifebar()
 
-        // game objects
         this.bullets = this.scene.add.group({
-            /*classType: Bullet,*/
             classType: Bullet,
             active: true,
             maxSize: 10,
             runChildUpdate: true,
         })
 
-        // tweens
-        // this.scene.tweens.add({
-        //     targets: this,
-        //     props: { y: this.y - 200 },
-        //     delay: 0,
-        //     duration: 2000,
-        //     ease: 'Linear',
-        //     easeParams: null,
-        //     hold: 0,
-        //     repeat: -1,
-        //     repeatDelay: 0,
-        //     yoyo: true,
-        // })
-
-        // physics
         this.scene.physics.world.enable(this)
     }
 
@@ -89,9 +67,6 @@ export class Enemy extends Phaser.GameObjects.Image {
             )
             this.handleShooting()
         } else {
-            // this.destroy()
-            // this.barrel.destroy()
-            // this.lifeBar.destroy()
             this.destroy()
         }
     }
@@ -113,7 +88,6 @@ export class Enemy extends Phaser.GameObjects.Image {
     private handleShooting(): void {
         if (this.scene.time.now > this.lastShoot) {
             if (this.bullets.getLength() < 10) {
-                // console.log('Create Bullet enemy')
                 this.bullets.add(
                     new Bullet({
                         scene: this.scene,
@@ -124,18 +98,8 @@ export class Enemy extends Phaser.GameObjects.Image {
                     })
                 )
 
-                // const bullet = this.bullets.get() as Bullet
-
-                // if(bullet) bullet.setParams(this.barrel.x, this.barrel.y, this.barrel.rotation, 'bulletRed')
-
                 this.lastShoot = this.scene.time.now + 400
             }
-            // const bullet = this.bullets.get() as Bullet
-
-            // if (bullet)
-            //     bullet.setParams(this.barrel.x, this.barrel.y, this.barrel.rotation, 'bulletRed')
-
-            // this.lastShoot = this.scene.time.now + 400
         }
     }
 
