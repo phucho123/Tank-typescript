@@ -234,7 +234,7 @@ export class Player extends Phaser.GameObjects.Image {
     }
 
     public addShield() {
-        this.shield = 1
+        this.shield += 1
         this.postFX.addGradient(0x0000ff, 0x00ff00, 0.5)
         this.barrel.postFX.addGradient(0x0000ff, 0x00ff00, 0.5)
     }
