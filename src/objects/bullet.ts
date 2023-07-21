@@ -33,7 +33,8 @@ export class Bullet extends Phaser.GameObjects.Image {
     }
 
     public update(): void {
-        ///
+        // console.log('bullet update here')
+        if (this.x > 3200 || this.x < 0 || this.y < 0 || this.y > 2400) this.destroy()
     }
 
     public setDamage(damage: number) {
