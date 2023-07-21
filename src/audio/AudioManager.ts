@@ -39,7 +39,6 @@ export class AudioManager {
     public mute() {
         this.hitButtonSound.setMute(true)
         this.explosionSound.setMute(true)
-
         this.hitSound.setMute(true)
     }
 

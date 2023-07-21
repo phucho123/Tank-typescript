@@ -240,6 +240,7 @@ export class GameScene extends Phaser.Scene {
     }
 
     private enemyBulletHitPlayer(bullet: Bullet, player: Player): void {
+        if (!this.updateState) return
         bullet.destroy()
         player.updateHealth(bullet.getDamage())
         // this.audioManager.playHit()
@@ -254,6 +255,7 @@ export class GameScene extends Phaser.Scene {
     }
 
     private playerBulletHitEnemy(bullet: Bullet, enemy: Enemy): void {
+        if (!this.updateState) return
         bullet.destroy()
         enemy.updateHealth(this.player.getDamage())
         this.audioManager.playHit()
